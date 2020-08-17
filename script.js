@@ -14,9 +14,7 @@ document.getElementById('search').addEventListener('click', () =>{
     })
 })
 
-function getLyrics() {
-    
-} 
+ 
 
 const searchResult = data => {
     document.getElementById('result').innerHTML = "";
@@ -38,18 +36,27 @@ const searchResult = data => {
                                                         <p class="author lead">Album by <span> ${artist} </span></p>
                                                         </div>
                                                         <div class="col-md-3 text-md-right text-center">
-                                                        <button id="get-Lyrics" class="btn btn-success">Get Lyrics</button>
+                                                        <button onclick="getLyrics('${artist}','${title}')" class="btn btn-success">Get Lyrics</button>
                                                         </div>
-                                                        </div>`;
-        document.getElementById('get-Lyrics').addEventListener('click', () =>{
-        fetch(lyricsText)
-        .then(res => res.json())
-        .then(data => {
-                document.getElementById('lyrics').innerText = data.lyrics;
-                document.getElementById('lyrics-title').innerText = title;
-            })
-        })                                                                                                                                                                                                                                                                   
+                                                        </div>`;                                                                                                                                                                                                                                                                   
     }   
+}
+
+function getLyrics(artist,title){
+    fetch(`${api.findLyrics}${artist}/${title}`)
+    .then(response => response.json())
+    .then(data => showLyrics(data, title));
+}
+
+function showLyrics(data, title){
+    if (data.lyrics == undefined) {
+        document.getElementById('lyrics').innerText = 'Sorry, The Lyrics is not available in Server';
+        alert('Sorry, The Lyrics is not available in Server');
+    }
+    else{
+        document.getElementById('lyrics').innerText = data.lyrics;
+    }
+    document.getElementById('lyrics-title').innerText = title;        
 }
 
 
