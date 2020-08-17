@@ -24,7 +24,8 @@ const searchResult = data => {
         const element = data.data[i];
         const title = element.title;
         const artist = element.artist.name;
-        const img = element.album.cover_small
+        const img = element.album.cover_small;
+        const song = element.preview;
         var lyricsText = 'https://api.lyrics.ovh/v1/' + artist + "/" + title;
 
         document.getElementById('result').innerHTML += `<div class="single-result row align-items-center my-3 p-3">
@@ -34,6 +35,7 @@ const searchResult = data => {
                                                         <div class="col-md-7">
                                                         <h4 class="lyrics-name"> ${title} </h4>
                                                         <p class="author lead">Album by <span> ${artist} </span></p>
+                                                        <a href="${song}"> <button class="btn btn-warning"> Download mp3 </button> </a>
                                                         </div>
                                                         <div class="col-md-3 text-md-right text-center">
                                                         <button onclick="getLyrics('${artist}','${title}')" class="btn btn-success">Get Lyrics</button>
